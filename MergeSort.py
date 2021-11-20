@@ -3,24 +3,31 @@
 Author: Vamsi Yalamanchili
 Date: 17-Nov-2021
 Purpose: Script for Merge Sort
+
+Time complexity: 
+    Worst case: O(nlogn)
+Space complexity: O(n) - Not Inplace
 """
 
 import random
 from random import seed 
+import time
 
 #Rescursive Function to Split the Data, Sort and then Merge again
-def mergeSort(inpList,n):
+def mergeSort(inpList):
+    
+    n = len(inpList)
     if(n>1):
         mid = n//2  #get the integer floor value only
         leftList  = inpList[:mid]
         rightList = inpList[mid:]
 
-        leftSortedList = mergeSort(leftList,len(leftList))
-        rightSortedList = mergeSort(rightList,len(rightList))
-      
-        finalList = mergeList(leftSortedList,rightSortedList)  
-        return finalList
-    else: 
+        leftList = mergeSort(leftList)
+        rightList = mergeSort(rightList)
+        
+        inpList = mergeList(leftList,rightList)  
+        return inpList
+    else:
         return inpList
 
 def mergeList(leftList,rightList):
@@ -58,15 +65,18 @@ def printList(inpList):
 
 if __name__ == "__main__":   
     seed(111)
-
+    
     #Generate n random numbers
-    inputList = random.sample(range(1, 1000), 100)
+    inputList = random.sample(range(1, 1000000), 100)
 
     print("Input List: ", end="\n")
     printList(inputList)
-
+    
+    start_time = time.time()
     #Call the Sort function
-    sortedList = mergeSort(inputList, len(inputList))
+    inputList = mergeSort(inputList)
+    
+    print("--- %s seconds for Merge Sort of 100 elements---" % (time.time() - start_time))
 
     print("Sorted List: ", end="\n")
-    printList(sortedList)
+    printList(inputList)
