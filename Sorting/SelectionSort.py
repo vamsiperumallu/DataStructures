@@ -2,7 +2,7 @@
 """
 Author: Vamsi Yalamanchili
 Date: 20-Nov-2021
-Purpose: Script for Bubble Sort
+Purpose: Script for Selection Sort
 
 Time complexity: 
     Best Case:    O(n)            #Already Sorted Array as input
@@ -15,20 +15,22 @@ import random
 from random import seed 
 import time
 
-def bubbleSort(inpList):
+def selectionSort(inpList):
 
     len1 = len(inpList)
    
-    for k in range(1,len1-1):
-        flag = 0                                #If already sorted, i.e. there were no swaps happened then return.
-        for i in range(0,len1-1):
-            if (inpList[i] > inpList[i+1]):
-                temp = inpList[i]               #Swap side by side elements
-                inpList[i] = inpList[i+1]
-                inpList[i+1] = temp
-                flag = 1
-        if flag == 0:
-            return inpList
+    for k in range(0,len1):
+        minIndex = k
+
+        for i in range(k+1,len1):                   #Find minimum of the list
+            if (inpList[minIndex] > inpList[i]):
+                minIndex = i
+            
+        if (minIndex != k):
+            temp = inpList[k]                       #Swap side by side elements
+            inpList[k] = inpList[minIndex]
+            inpList[minIndex] = temp
+        
     return inpList
 
 #Function to print the List
@@ -39,10 +41,10 @@ def printList(inpList):
 #    print()
 
 if __name__ == "__main__":   
-    seed(122)
+    seed(111)
 
     #Generate n random numbers
-    inputList = random.sample(range(1, 10000), 100)
+    inputList = random.sample(range(1, 100), 20)
 
     print("Input List: ", end="\n")
     printList(inputList)
@@ -50,9 +52,9 @@ if __name__ == "__main__":
     start_time = time.time()
     
     #Call the Sort function - pass Input list to be sorted
-    bubbleSort(inputList)
+    selectionSort(inputList)
 
-    print("--- %s seconds for Bubble Sort of 100 elements---" % (time.time() - start_time))
+    print("--- %s seconds for Selection Sort of 100 elements---" % (time.time() - start_time))
     
     print("Sorted List: ", end="\n")
     printList(inputList)
